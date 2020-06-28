@@ -2,6 +2,9 @@
 
 This repository holds the configuration of various smart devices in my house
 
+# first run setup.sh to install git hooks
+to avoid committing open-text passwords
+
 ## ESPHome config holds wifi passwords in the open form, please don't commit them, just leave an empty string
 
 ### ESPHome

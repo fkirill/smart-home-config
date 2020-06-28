@@ -1,0 +1,21 @@
+#!/bin/bash
+echo "Checking for passwords in config files..."
+
+# 1. search for all config files under 'esp32' folder
+# 2. Print all the files
+# 3. select all the lines that contain 'password:'
+# 4. trim leading and trailing whitespace space
+# 5. only select the lines that are different from 'password:' (meaning the is a real password present in the config files)
+# 6. count the lines in the output (if >0, we have passwords present in the config files)
+# 7. trim the count output
+
+NUM_OF_PASSWORDS=$(find esp32 -name *.yaml | xargs cat | grep "password:" | awk '{$1=$1};1' | grep -e "^password:$" -v | wc -l | awk '{$1=$1};1')
+if [ $NUM_OF_PASSWORDS == "0" ]; then
+    echo "All clear, can proceed to commit"
+    exit 0
+fi
+echo "There were some esp32 config files found containg open-text passwords. Please remove the passwords before attempting to commit."
+echo "Here are the places where the open-text passwords were found:"
+grep -Hn "password:" esp32/**/*.yaml | grep "password:$" -v
+echo "COMMIT ABORTED!"!
+exit 1
