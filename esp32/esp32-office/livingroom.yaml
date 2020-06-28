@@ -1,0 +1,53 @@
+esphome:
+  name: esp32
+  platform: ESP32
+  board: esp32dev
+
+wifi:
+  ssid: "FKIRILL"
+  password:
+
+  # Enable fallback hotspot (captive portal) in case wifi connection fails
+  ap:
+    ssid: "Esp32 Fallback Hotspot"
+    password:
+
+captive_portal:
+
+# Enable logging
+logger:
+
+# Enable Home Assistant API
+api:
+
+ota:
+
+esp32_ble_tracker:
+
+sensor:
+  - platform: inkbird_ibsth1_mini
+    mac_address: 38:81:D7:0A:9C:11
+    temperature:
+        name: "Inkbird IBS-TH1 Mini Temperature"
+    humidity:
+        name: "Inkbird IBS-TH1 Mini Humidity"
+    battery_level:
+        name: "Inkbird IBS-TH1 Mini Battery Level"
+
+  - platform: dht
+    model: dht11
+    pin: 22
+    temperature:
+        id: living_room_temperature
+        name: "Living room Temperature"
+    humidity:
+        id: living_room_humidity
+        name: "Living room Humidity"
+    update_interval: 60s    
+
+  - platform: xiaomi_lywsdcgq
+    mac_address: 58:2D:34:38:74:77
+    temperature:
+        name: "Xiaomi BT Temperature"
+    humidity:
+        name: "Xiaomi BT Humidity"
